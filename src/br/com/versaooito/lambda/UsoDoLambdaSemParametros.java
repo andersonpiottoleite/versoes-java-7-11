@@ -31,8 +31,6 @@ public class UsoDoLambdaSemParametros {
 }
 
 
-
-
 @FunctionalInterface
 interface InterfaceFuncional{
 	void metodo();

@@ -14,7 +14,7 @@ public class UsoDoLambdaComUmParametro {
 		
 		System.out.println("------------------------------");
 		
-		herois.forEach(h -> System.out.println(h));
+		herois.forEach(heroi -> System.out.println(heroi));
 		
 		metodo("Piotto", s -> System.out.println(s.toLowerCase()));
 		
