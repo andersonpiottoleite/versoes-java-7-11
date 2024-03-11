@@ -26,11 +26,10 @@ public class UsoDosStreams {
 				break;
 			}
 		}
-		System.out.println(primeiroTimeSemMundial.getNome());
+		//System.out.println(primeiroTimeSemMundial.getNome());
 		
 		// todo o código acima pode ser subistituido por?
-		String nome = times.stream().filter(time -> !time.isTemMundial()).findFirst().get().getNome();
-		System.out.println(nome);
+		System.out.println(times.stream().filter(time -> !time.isTemMundial()).findFirst().get().getNome());
 		
 		// para obter um stream:
 		Stream<Time> stream = times.stream();
@@ -38,12 +37,15 @@ public class UsoDosStreams {
 		//um stream possui operaçoes/ações
 		
 		//açoes intermediarias, podem ser executadas varias vezes, pois sempre devolvem um novo stream a cada execucao de metodo
+		// - filter - aplica um filtro no stream
 		times.stream().filter(time -> !time.isTemMundial())
 		.filter(time -> time.getQtdeTitulosBrasileiros() > 8)
 		.filter(time -> time.getNome().length() > 5);
 		
 		//acoes finais (forEach) encerram o Streams, geralmente deveolvem void
-		times.stream().forEach(time -> System.out.println(time.getNome()));
+		times.stream()
+		.filter(time -> time.getQtdeTitulosBrasileiros() > 8)
+		.forEach(time -> System.out.println(time.getNome()));
 		
 		// programação funcional é quando posso chamar varios metodos em sequencia .metodo().metodo().metodo().metodo()
 		String nome2 = times.stream()
@@ -54,7 +56,7 @@ public class UsoDosStreams {
 		
 		// podemos usar varias operações/ações intermediarias seguidas (como o filter)
 		// porem quando for executada uma operação final (como o forEach) o stream é encerrado
-		 times.stream()
+		times.stream()
 		.filter(time -> time.getQtdeTitulosBrasileiros() > 8)
 		.filter(time -> time.isTemMundial())
 		.forEach(t -> System.out.println(t.getNome()));
@@ -64,18 +66,25 @@ public class UsoDosStreams {
 		.forEach(t -> System.out.println(t.getNome()));
 		
 		// modo tradicional (mais cutoso se comparado com o metodo acima)
-		/*List<Time> timescomMaisDeOitoTitulosBrasileiros = new ArrayList<>();
+		List<Time> timescomMaisDeOitoTitulosBrasileiros = new ArrayList<>();
 		for (Time time : times) {
 			if (time.getQtdeTitulosBrasileiros() > 8) {
 				timescomMaisDeOitoTitulosBrasileiros.add(time);
 			}
 		}
 		for (Time time : timescomMaisDeOitoTitulosBrasileiros) {
-			System.out.println(time.getNome());
-		}*/
+			//System.out.println(time.getNome());
+		}
 		
-		// percorre o stream, coleta os nomes, e mapeia para uma lista de Strings
-		List<String> nomesDosTimes = times.stream().map(time -> {
+		List<String> nomesDosTimes = times.stream()
+				.filter(time -> time.getQtdeTitulosBrasileiros() > 8)
+				.map(time -> {
+			return time.getNome();
+			}
+		).collect(Collectors.toList());
+		
+		// map e collect - percorre o stream, coleta os nomes, e mapeia para uma lista de Strings
+		List<String> nomesDosTimes2 = times.stream().map(time -> {
 			return time.getNome();
 			}
 		).collect(Collectors.toList());
@@ -83,20 +92,17 @@ public class UsoDosStreams {
 		nomesDosTimes.forEach(n -> System.out.println(n));
 		
 		// pula dois elementos da lista
+		System.out.println("-------------------------------------------");
+		
 		times.stream().skip(2).forEach(t -> System.out.println(t.getNome()));
 		
-		// limita a aos dois elementos iniciais da lista
+		//limit - limita a aos dois elementos iniciais da lista
 		times.stream().limit(2).forEach(t -> System.out.println(t.getNome()));
 		
-		// efetua comparação por nome e ordena os elementos da lista
+		//sorted - efetua comparação por nome e ordena os elementos da lista
 		times.stream()
 		.sorted((time1, time2) -> time1.getNome().compareTo(time2.getNome()))
 		.forEach(t -> System.out.println(t.getNome()));
-		
-		for (int i = 0; i < 100000; i++) {
-			String string = args[i];
-		}
-		
 	}
 
 }
@@ -137,6 +143,11 @@ class Time{
 
 	public void setTemMundial(boolean temMundial) {
 		this.temMundial = temMundial;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return ((Time)obj).getNome().equals(this.getNome());
 	}
 	
 }

@@ -1,6 +1,7 @@
 package exemplos.base;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -59,6 +60,15 @@ public class UsoStream {
 		}).forEach(t -> System.out.println(t.getNome()));
 		
 		times.parallelStream().forEach(t -> System.out.println(t));
+		
+		
+		List<List<Integer>> matrizDeNumeros = Arrays.asList(
+				Arrays.asList(1,2,3),
+				Arrays.asList(4,5,5)
+				);
+		matrizDeNumeros.stream().forEach(t -> System.out.println(t));
+		
+		matrizDeNumeros.stream().flatMap(n -> n.stream()).forEach(t -> System.out.println(t));
 		
 		
 	}
