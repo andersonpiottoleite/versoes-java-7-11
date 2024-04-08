@@ -10,7 +10,7 @@ public class UsoMethodReference {
 		
 		List<String> letras = Arrays.asList("a","b", "c");
 		
-		
+		/*
 		letras.forEach(c -> System.out.println(c));
 		letras.forEach(System.out::println);
 		
@@ -25,16 +25,18 @@ public class UsoMethodReference {
 		letras.stream().map(util::transformaEmMinuscula).forEach(System.out::println);
 		
 		// construtor (Nome da classe + o operador new)
-		List<SuperLetra> listaSuperLetras = letras.stream().map(l -> {
-			return new SuperLetra(l);
+		List<SuperLetra> listaSuperLetras = letras.stream().map(letra -> {
+			return new SuperLetra(letra);
 		}).collect(Collectors.toList());
 		
-		List<SuperLetra> listaSuperLetras2 = letras.stream().map(SuperLetra::new).collect(Collectors.toList());
+		List<SuperLetra> listaSuperLetras2 = letras.stream()
+				.map(SuperLetra::new).collect(Collectors.toList());*/
 		
 		// quando nao vira?
 		//quando vc esta operando sobre um parametro e vai referencia um metodo que usa dois parametros
 		letras.stream().forEach(l -> System.out.printf(" letra '%s' ", l));
-		letras.stream().forEach(System.out::printf);
+		//letras.stream().forEach(System.out::printf);
+		//letras.stream().forEach(l -> System.out.printf(l, ""));
 		
 	}
 }

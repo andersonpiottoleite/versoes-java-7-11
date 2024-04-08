@@ -1,4 +1,4 @@
-package br.com.versaooito.defaultmethods;
+package br.com.versaooito.methodreferences;
 
 import java.util.ArrayList;
 import java.util.List;
